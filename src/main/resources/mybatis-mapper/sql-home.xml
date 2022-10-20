@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.HomeMapper">
+
+
+	<!-- 회원정보 추출 --> 
+	<select id="getHomeList"
+		resultType="com.example.test1.model.Home">
+		SELECT *
+		  FROM      t2_home th
+  		 INNER JOIN t2_home_detail thd
+		    ON th.h_no = thd.h_no
+	 	 WHERE thd.a_id = #{aId}
+		   AND th.del_flag = 'N'
+	</select>
+
+	<!-- 방내놓기 -->
+	<insert id="insertHome" parameterType="hashmap"
+		useGeneratedKeys="true">
+		INSERT INTO t2_home
+			(a_id, h_choice, createDate, changeDate, sale_flag, del_flag)
+		VALUES
+			(#{aId}, #{hChoice}, NOW(), NOW(), 'N', 'N')
+	</insert>
+	
+	<insert id="insertHomeDetail" parameterType="hashmap"
+		useGeneratedKeys="true">
+		INSERT INTO t2_home_detail
+			(h_name, a_id, h_price, h_mo, h_ae, h_structure2,
+			h_add, h_high, h_allhigh, h_roomno, h_bathno,
+			h_structure, h_way, h_room_size1, h_room_size2, 
+			h_info, createDate, changeDate,
+			h_move_in, del_flag)
+		VALUES
+			(#{hName}, #{aId}, #{hPrice}, #{hMo}, #{hAe}, #{h_structure2}, 
+			#{hAdd}, #{hHigh}, #{hAllhigh}, #{hRoomno}, #{hBathno},
+			#{hStructure}, #{hWay}, #{hRoomSize1}, #{hRoomSize2}, 
+			#{hInfo}, NOW(), NOW(), 
+			#{hMoveIn}, 'N')
+	</insert>
+</mapper>

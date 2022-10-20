@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.AccountMapper">
+	
+	<!-- 회원가입 -->
+
+	<!-- 중복확인 -->
+	<select id="selectId" parameterType="String" resultType="int">
+        SELECT COUNT(a_id) 
+        FROM t2_account
+        WHERE a_id = #{aId}
+    </select>
+    
+    <!-- 삽입 -->
+	<insert id="insertAccount" parameterType="hashmap"
+		useGeneratedKeys="true">
+		INSERT INTO t2_account
+			(a_id, passwd, a_name, a_tel, a_email, s_name, s_num, s_tel, s_add, createdate, changedate, status, del_flag)
+		VALUES
+			(#{aId}, #{passwd}, #{aName}, #{aTel}, #{aEmail}, #{sName}, #{sNum}, #{sTel}, #{sAdd}, NOW(), NOW(), #{status}, 'N')
+	</insert>
+
+
+	<!-- 로그인 -->
+	    
+    <!-- 아이디 및 비밀번호 확인 -->
+	<select id="selectLogin" parameterType="String" resultType="int">
+        SELECT COUNT(a_id) 
+        FROM t2_account
+        WHERE a_id = #{aId}
+        AND passwd = #{passwd}
+        AND del_flag = 'N'
+    </select>
+    
+	<!-- 세션 정보 -->
+	<select id="login" parameterType="com.example.test1.model.Account" resultType="com.example.test1.model.Account">
+        SELECT *
+        FROM t2_account
+        WHERE a_id = #{aId} 
+        AND passwd = #{passwd}
+		AND del_flag = "N"
+    </select>
+    
+    
+    <!-- 마이페이지 -->
+
+	<!-- 회원정보 추출 --> 
+	<select id="selectAccountList"
+		resultType="com.example.test1.model.Account">
+		SELECT *
+		FROM t2_account
+		WHERE a_id = #{aId}
+		AND del_flag = 'N'
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateAccount" parameterType="hashmap">
+		UPDATE t2_account
+		SET
+		passwd = #{passwd},
+		a_tel = #{aTel},
+		a_email = #{aEmail},
+		s_tel = #{sTel},
+		changedate = NOW()
+		WHERE a_id = #{aId}
+	</update>
+	
+	<!-- 삭제 -->
+	<update id="deleteAccount" parameterType="hashmap">
+		UPDATE t2_account
+		SET
+		del_flag = 'Y',
+		changedate = NOW()
+		WHERE a_id = #{aId}
+	</update>
+		
+</mapper>

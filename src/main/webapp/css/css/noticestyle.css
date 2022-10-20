@@ -1,0 +1,66 @@
+.overlay{
+    height: 200px;
+}
+.pagination {
+    justify-content: center;
+ }
+ .pagination > li > a {
+     text-align: center;
+     display: block;
+     float: none;
+     margin-left: -78px;
+}
+.btn-block {
+    width: 80%;
+    height: 40px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-items: center;
+    box-shadow: 2px -2px 5px 0px black;
+}
+.btn-block a {
+vertical-align:auto;
+text-align: center;
+}
+
+.sign-in {
+    margin: -15px 0 20px 20px;
+    height:34px;
+    border-radius: 10px;
+    border: 1px solid #999;
+    color: #FFF;
+    background-color: #999;
+}    
+.sign-in:hover{
+    background-color: rgb(255, 0, 221);
+}
+.btn-block:hover {
+    background-color: yellowgreen;
+}
+#table-search {
+    margin: 15px 0 10px 0;
+    float: right;
+}
+#table-search .input-box {
+    height: 30px;
+    width: 200px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: #FEFDED;
+}
+#table-search .btn {
+    padding: 2px;
+    margin:  0 0 0 5px;
+    width: 90px;
+    height: 30px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    color: #FFF;
+    background-color:rgb(255, 0, 149);
+}
+#notice-write {
+    color: white;
+    float: right;
+    display: inline;
+}

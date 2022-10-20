@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.BoardMapper">
+
+	<!-- 공통 -->
+
+	<!-- 상세 select --> 
+	<select id="selectBoard"
+		resultType="com.example.test1.model.Board">
+		SELECT *
+		FROM t2_board
+		WHERE b_no = #{bNo}
+	</select>
+	
+	<!-- 댓글 select --> 
+	<select id="selectCommentList" resultType="com.example.test1.model.Board">
+		SELECT *
+		FROM t2_comment
+		WHERE b_no = #{bNo}
+	</select>
+
+	<!-- 삽입 -->
+	<insert id="insertBoard" parameterType="hashmap"
+		useGeneratedKeys="true">
+		INSERT INTO t2_board
+		(title, a_id, content, b_view, b_status, createdate, changedate, del_flag)
+		VALUES
+		(#{title}, 'use_b',	#{content},	'0', #{status}, NOW(), NOW(), 'N')
+	</insert>
+
+	<!-- 삭제 -->
+	<update id="deleteBoard" parameterType="hashmap">
+		UPDATE t2_board
+		SET
+		del_flag = 'Y',
+		changedate = NOW()
+		WHERE b_no = #{bNo}
+	</update>
+
+	<!-- 수정 -->
+	<update id="updateBoard" parameterType="hashmap">
+		UPDATE t2_board
+		SET
+		content = #{content},
+		changedate = NOW()
+		WHERE b_no = #{bNo}
+	</update>
+	
+	<!-- 조회수 -->
+	<update id="updateCnt" parameterType="hashmap">
+		UPDATE t2_board 
+		SET b_view = b_view + 1 
+		WHERE b_no = #{bNo}
+	</update>
+
+
+	<!-- 공지사항 -->
+
+	<!-- 전체 select -->
+	<select id="selectNoticeList"
+		resultType="com.example.test1.model.Board">
+		SELECT *
+		FROM t2_board
+		WHERE b_status = 'N'
+		AND del_flag = 'N'
+		ORDER BY b_no DESC
+	</select>
+
+
+	<!-- 익명게시판 -->
+
+	<!-- 전체 select -->
+	<select id="selectAnoymousList"
+		resultType="com.example.test1.model.Board">
+		SELECT *
+		FROM t2_board
+		WHERE b_status = 'A'
+		AND del_flag = 'N'
+		ORDER BY b_no DESC
+	</select>
+
+
+	<!-- 자유게시판 -->
+
+	<!-- 전체 select -->
+	<select id="selectBoardList"
+		resultType="com.example.test1.model.Board">
+		SELECT *
+		FROM t2_board
+		WHERE b_status = 'B'
+		AND del_flag = 'N'
+		ORDER BY b_no DESC
+	</select>
+	
+	<!-- 삽입 -->
+	<insert id="insertComment" parameterType="hashmap" >
+		INSERT INTO t2_comment
+		(c_no2, b_no, a_id, b_content, createDate, changeDate, c_status, del_flag)
+		VALUES
+		(#{cno2}, #{bno}, 'test', #{commnet}, NOW(), NOW(), #{status}, 'N')
+	</insert>
+	
+
+</mapper>
